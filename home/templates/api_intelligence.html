@@ -1,0 +1,26 @@
+{% extends 'bootstrap.html' %}
+{% block content %}
+<form method="POST" action="{% url 'api-intelligence' %}">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Adress" aria-label="Recipient's username" aria-describedby="button-addon2" name="adress">
+
+        <input type="text" class="form-control" placeholder="City" aria-label="Recipient's username" aria-describedby="button-addon2" name="city">
+
+        <input type="text" class="form-control" placeholder="Postal Code" aria-label="Recipient's username" aria-describedby="button-addon2" name="postal_code">
+
+        <input type="text" class="form-control" placeholder="State" aria-label="Recipient's username" aria-describedby="button-addon2" name="state">
+
+        <input type="text" class="form-control" placeholder="Country" aria-label="Recipient's username" aria-describedby="button-addon2" name="country">
+
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Cerca</button>
+        </div>
+
+    </div>
+</form>
+
+<br/><br/>
+
+{{ output }}
+{% endblock %}
