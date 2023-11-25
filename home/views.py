@@ -73,7 +73,14 @@ def api_description(request):
         # The response is formatted in JSON
         json_response = response.json()
 
-        return render(request, 'api_description.html', {'output': json_response})
+        descriptions = json_response['response']['description_blocks']
+
+        final_desc = str()
+
+        for block in descriptions:
+            final_desc += block['description'] + ' '
+
+        return render(request, 'api_description.html', {'description': final_desc, 'link_img': image_url})
 
     return render(request, 'api_description.html', {})
 
