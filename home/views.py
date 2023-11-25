@@ -1,7 +1,29 @@
 from django.shortcuts import render
 import requests
 
+import pandas as pd
+from itertools import chain
+from collections import ChainMap
+
 # Create your views here.
+
+def get_dataframe(json_object):
+    data_list = json_object['response']['comparables']
+    grouped_dict = dict()
+    [grouped_dict.setdefault(key, []).append(value) for d in data_list for key, value in d.items()]
+
+    ordered_dict = {}
+    for key, value in grouped_dict.items():
+        for i, inner_dict in enumerate(value):
+            if key == 'media':
+                continue
+            ordered_dict.setdefault(i, []).append(inner_dict)
+
+    final_dict = {}
+    for key, value in ordered_dict.items():
+        final_dict[key] = dict(ChainMap(*value))
+
+    return pd.DataFrame.from_dict(final_dict).T
 
 
 def api_vision(request):
@@ -90,7 +112,6 @@ def api_property(request):
         result = request.POST.copy()
 
         url_img = result.get('input', None)
-        url_list = list()
 
         if ',' in url_img:
             url_list = url_img.split(',')
@@ -152,7 +173,13 @@ def api_intelligence(request):
         # The response is formatted in JSON
         json_response = response.json()
 
-        return render(request, 'api_intelligence.html', {'output': json_response})
+        dataframe = get_dataframe(json_response)
+
+        data = {
+            'table': dataframe.to_html(classes='table table-striped', border=0)
+        }
+
+        return render(request, 'api_intelligence.html', data)
 
     return render(request, 'api_intelligence.html', {})
 
