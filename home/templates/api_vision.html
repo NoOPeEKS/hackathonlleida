@@ -12,5 +12,12 @@
 
 <br/><br/>
 
-{{ output }}
+<img src="{{ link_img }}">
+{{ exterior_style }}
+{{ room_type }}
+{{ r1r6 }}
+{{ c1c6 }}
+{% for feature in feature_labels %}
+    {{ feature }}
+{% endfor %}
 {% endblock %}

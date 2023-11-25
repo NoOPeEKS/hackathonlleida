@@ -24,7 +24,16 @@ def api_vision(request):
 
         response_json = response.json()
 
-        return render(request, 'api_vision.html', {'output': response_json})
+        exterior_style = response_json['response']['solutions']['re_exterior_styles']['top_prediction']['label']
+        room_type = response_json['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']
+        r1r6 = response_json['response']['solutions']['re_condition_r1r6_global']['score']
+        c1c6 = response_json['response']['solutions']['re_condition_c1c6']['score']
+        detections = response_json['response']['solutions']['re_features_v5']['detections']
+        feature_labels = [detection['label'] for detection in detections]
+
+        return render(request, 'api_vision.html', {'exterior_style': exterior_style, 'room_type': room_type,
+                                                   'r1r6': r1r6, 'c1c6': c1c6, 'feature_labels': feature_labels,
+                                                   'link_img': url_img})
 
     return render(request, 'api_vision.html', {})
 
