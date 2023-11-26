@@ -1,5 +1,25 @@
 {% extends 'navbar.html' %}
 {% block content %}
+<style>
+    /* Estilos CSS */
+    .container {
+        text-align: center; /* Centrar elementos dentro del contenedor */
+    }
+
+    img {
+        display: block; /* Hacer que la imagen sea un bloque para poder centrarla fácilmente */
+        margin: 0 auto; /* Centrar la imagen horizontalmente */
+        max-width: 80%; /* Establecer el ancho máximo de la imagen */
+        height: auto; /* Mantener la proporción de la imagen */
+        margin-bottom: 20px; /* Agregar espacio en la parte inferior de la imagen */
+    }
+
+    .description {
+        margin: 0 20px 40px; /* Margen en la parte superior e inferior, centrado horizontalmente */
+        text-align: justify; /* Justificar el texto */
+        max-width: 80%; /* Ancho máximo para la descripción */
+    }
+</style>
 <form method="POST" action="{% url 'api-description' %}">
     {% csrf_token %}
     <div class="input-group mb-3">

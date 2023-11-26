@@ -1,23 +1,77 @@
 {% extends 'navbar.html' %}
 {% block content %}
-<form method="POST" action="{% url 'api-vision' %}">
-    {% csrf_token %}
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Image URL" aria-label="Recipient's username" aria-describedby="button-addon2" name="input">
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Cerca</button>
+<style>
+    /* Estilos CSS */
+    .container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .text-section {
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .feature-item {
+        display: block;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+
+/* CSS */
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-item {
+    display: inline-block;
+    margin-right: 10px; /* Espacio entre elementos en línea */
+}
+</style>
+
+<div class="container">
+    <form method="POST" action="{% url 'api-vision' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Image URL" aria-label="Recipient's username" aria-describedby="button-addon2" name="input">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Search</button>
+          </div>
         </div>
+    </form>
+
+    <br/><br/>
+    <img src="{{ link_img }}">
+
+    {% if display %}
+    <div class="text-section">
+      <strong>Exterior Style:</strong> {{ exterior_style }}
+        <br>
+        <strong>Room type: </strong>{{ room_type }}
+        <br>
+        <strong>R1R6 score: </strong>{{ r1r6 }}
+        <br>
+        <strong>C1C6 score: </strong>{{ c1c6 }}
+        <br>
+ <strong>Features:</strong>
+        <ul class="feature-list">
+       
+        {% for feature in feature_labels %}
+            <li class="feature-item">{{ feature }}</li>
+        {% endfor %}
+        </ul>
     </div>
-</form>
-
-<br/><br/>
-
-<img src="{{ link_img }}">
-{{ exterior_style }}
-{{ room_type }}
-{{ r1r6 }}
-{{ c1c6 }}
-{% for feature in feature_labels %}
-    {{ feature }}
-{% endfor %}
+    {% endif %}
+</div>
 {% endblock %}

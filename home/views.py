@@ -2,7 +2,6 @@ from django.shortcuts import render
 import requests
 
 import pandas as pd
-from itertools import chain
 from collections import ChainMap
 
 # Create your views here.
@@ -55,9 +54,9 @@ def api_vision(request):
 
         return render(request, 'api_vision.html', {'exterior_style': exterior_style, 'room_type': room_type,
                                                    'r1r6': r1r6, 'c1c6': c1c6, 'feature_labels': feature_labels,
-                                                   'link_img': url_img})
+                                                   'link_img': url_img, 'display': True})
 
-    return render(request, 'api_vision.html', {})
+    return render(request, 'api_vision.html', {'display': False})
 
 
 def api_description(request):
