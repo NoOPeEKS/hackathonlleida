@@ -19,7 +19,7 @@
 ![DescriptionAPI](./images/DescriptionAPI.jpg "DescriptionAPI")
 3. PropertyAPI:
 ![PropertyAPI](./images/PropertyAPI.jpg "PropertyAPI")
-4. VisionAPI:
+4.IntelligenceAPI:
 ![IntelligenceAPI](./images/IntelligenceAPI.jpg "IntelligenceAPI")
 
 ## Data processing
