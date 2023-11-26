@@ -135,7 +135,47 @@ def api_property(request):
 
         response_json = response.json()
 
-        return render(request, 'api_property.html', {'output': response_json})
+        # Extraer el score global y el score individual de c1c6
+        c1c6_global_score = response_json["response"]["solutions"]["c1c6"]["property"]["score"]
+        c1c6_individual_scores = response_json["response"]["solutions"]["c1c6"]["summary"]["score"]
+
+        # Extraer los labels de los detections dentro de features
+        features_labels = [detection["label"] for result in response_json["response"]["solutions"]["features"]["results"]
+                           for detection in result["values"]["detections"]]
+
+        # Extraer los labels dentro de lookup_value de features_reso
+        features_reso_labels = [item["label"] for item in
+                                response_json["response"]["solutions"]["features_reso"]["summary"]["lookup_fields"]]
+
+        # Extraer la score global y el score individual de q1q6
+        q1q6_global_score = response_json["response"]["solutions"]["q1q6"]["property"]["score"]
+        q1q6_individual_scores = response_json["response"]["solutions"]["q1q6"]["summary"]["score"]
+
+        # Extraer la score global y el score individual de r1r6
+        r1r6_global_score = response_json["response"]["solutions"]["r1r6"]["property"]["score"]
+        r1r6_individual_scores = response_json["response"]["solutions"]["r1r6"]["summary"]["score"]
+
+        # Extraer los top predictions de roomtype y roomtype_reso
+        roomtype_top_prediction = [result["values"]["top_prediction"] for result in
+                                   response_json["response"]["solutions"]["roomtype"]["results"]]
+        roomtype_reso_top_prediction = [result["values"]["top_prediction"] for result in
+                                        response_json["response"]["solutions"]["roomtype_reso"]["results"]]
+
+        # Verificar si hay información de style
+        style_info_available = "style" in response_json["response"]["solutions"]
+
+        data = {'c1c6_global': c1c6_global_score, 'c1c6_indiv': c1c6_individual_scores,
+                 'features_labels': features_labels, 'features_reso_labels': features_reso_labels,
+                 'q1q6_global': q1q6_global_score, 'q1q6_indiv': q1q6_individual_scores,
+                 'r1r6_global': r1r6_global_score, 'r1r6_indiv': r1r6_individual_scores,
+                 'roomtype_pred': roomtype_top_prediction, 'roomtype_reso_pred': roomtype_reso_top_prediction,
+                 'style_info': style_info_available}
+
+        df = pd.DataFrame([data])
+
+        # Enviar el DataFrame a la vista
+        context = {'data': df.to_html(classes='table table-striped', border=0)}
+        return render(request, 'api_property.html', context)
 
     return render(request, 'api_property.html', {})
 
