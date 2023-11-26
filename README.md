@@ -1,6 +1,6 @@
 # Web application for Restb.ai API
 
-## How to use:
+## How to deploy:
 1. Install the needed dependencies:
     * `pip install django`
     * `pip install pandas`
@@ -10,6 +10,17 @@
     * `python3 manage.py runserver`
 
 3. Access the web application through http://127.0.0.1:8000
+
+## API Usage:
+
+1. VisionAPI:
+![VisionAPI](./images/VisionAPI.jpg "VisionAPI")
+2. DescriptionAPI:
+![DescriptionAPI](./images/DescriptionAPI.jpg "DescriptionAPI")
+3. PropertyAPI:
+![PropertyAPI](./images/PropertyAPI.jpg "PropertyAPI")
+4. VisionAPI:
+![IntelligenceAPI](./images/IntelligenceAPI.jpg "IntelligenceAPI")
 
 ## Data processing
 
